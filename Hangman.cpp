@@ -27,10 +27,10 @@ void Hangman::buildArray(){
 
 string Hangman::setUpGame(int randomChoice){
     string word = wordArray[randomChoice]; //random word from the built array
-    cout<<"\nThe computer has selected a random word"<<endl;
+    cout<<"\nThe computer has selected a random word with " << word.size() << " letters." <<endl; // makes the game about 50000x more pleasant to play.
 
     for (int i = 0; i < word.size(); i++){ //this shows the spaces of the word
-        cout<<"_";
+        cout<<"_ "; //  Adding a space in between the underscore would really make this game easier to play.
     }
     cout<<endl<<endl;
 
