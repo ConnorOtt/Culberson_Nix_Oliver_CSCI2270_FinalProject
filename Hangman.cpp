@@ -103,83 +103,90 @@ void Hangman::gameplay(letter* word){
         cin>>user;
         guess = tolower(user);
         cin.clear();
-        cout<<"==============================================="<<endl;
-        while(temp){
-            finished = true;
-            if (temp->key == guess){
-                found = true;
-                temp->found = true;
-            }
-            temp = temp->next;
-        }
-        temp = word;
-        if (found){
-            cout<<"\nNICE GUESS!!"<<endl<<endl;
-            while (temp){
-                if (temp->found == false){
-                    finished = false;
-                }
-                temp = temp->next;
-            }
-            temp = word;
-            while (temp){
-                if (temp->found){
-                    cout<<temp->key;
-                }
-                else {
-                    cout<<"_";
-                }
-            temp = temp->next;
-            }
-            cout<<endl;
-            cout<<"\nWrong tries remaining: "<<wrongGuess<<endl;
-            cout<<"Previous tries: ";
-            for (int i = 0; i < 5; i++){
-                cout<<guessedLetters[i]<<" ";
-            }
-            cout<<endl;
-            temp = word;
 
-        }
-        else if (!found){
-            cout<<"Sorry, nope."<<endl;
-	    visual(wrongGuess);
-            addPreviousTry(guess);
-            while (temp){
-                if (!temp->found){
-                    finished = false;
-                }
-                temp = temp->next;
-            }
-            temp = word;
-            while (temp){
-                if (temp->found){
-                    cout<<temp->key;
-                }
-                else {
-                    cout<<"_";
-                }
-            temp = temp->next;
-            }
-            cout<<endl;
-            wrongGuess--;
-            if (wrongGuess != -1){
-                cout<<"\nWrong tries remaining: "<<wrongGuess<<endl;
-                cout<<"Previous wrong tries: ";
-            for (int i = 0; i < 5; i++){
-                cout<<guessedLetters[i]<<" ";
-            }
-            cout<<endl;
-        }
-
-    }
-    if (finished){
-            cout<<"\nGREAT JOB, YOU WIN"<<endl<<endl;
+        if (!isTried(guess)) // checks to see whether or not a letter has already been used
+        {
             cout<<"==============================================="<<endl;
-            for (int i = 0; i < 5; i++ ){
-            guessedLetters[i]=NULL;}
-            break;
+            while(temp){
+                finished = true;
+                if (temp->key == guess){
+                    found = true;
+                    temp->found = true;
+                }
+                temp = temp->next;
+            }
+            temp = word;
+            if (found){
+                cout<<"\nNICE GUESS!!"<<endl<<endl;
+                while (temp){
+                    if (temp->found == false){
+                        finished = false;
+                    }
+                    temp = temp->next;
+                }
+                temp = word;
+                while (temp){
+                    if (temp->found){
+                        cout<<temp->key;
+                    }
+                    else {
+                        cout<<"_";
+                    }
+                temp = temp->next;
+                }
+                cout<<endl;
+                cout<<"\nWrong tries remaining: "<<wrongGuess<<endl;
+                cout<<"Previous tries: ";
+                for (int i = 0; i < 5; i++){
+                    cout<<guessedLetters[i]<<" ";
+                }
+                cout<<endl;
+                temp = word;
+
+            }
+            else if (!found){
+                cout<<"Sorry, nope."<<endl;
+            visual(wrongGuess);
+                addPreviousTry(guess);
+                while (temp){
+                    if (!temp->found){
+                        finished = false;
+                    }
+                    temp = temp->next;
+                }
+                temp = word;
+                while (temp){
+                    if (temp->found){
+                        cout<<temp->key;
+                    }
+                    else {
+                        cout<<"_";
+                    }
+                temp = temp->next;
+                }
+                cout<<endl;
+                wrongGuess--;
+                if (wrongGuess != -1){
+                    cout<<"\nWrong tries remaining: "<<wrongGuess<<endl;
+                    cout<<"Previous wrong tries: ";
+                for (int i = 0; i < 5; i++){
+                    cout<<guessedLetters[i]<<" ";
+                }
+                cout<<endl;
+            }
+
         }
+        if (finished){
+                cout<<"\nGREAT JOB, YOU WIN"<<endl<<endl;
+                cout<<"==============================================="<<endl;
+                for (int i = 0; i < 5; i++ ){
+                guessedLetters[i]=NULL;}
+                break;
+            }
+        }else{
+            cout << "You've already tried that letter, please try another." << endl;
+        }
+
 }
 if (wrongGuess == -1){
     temp = word;
@@ -218,4 +225,17 @@ void Hangman::addPreviousTry(char letter){
     }
 
 
+}
+
+bool Hangman :: isTried(char guess) // small check for whether or not a letter has already been guessed.
+{
+    bool tried = false;
+    for (int i = 0; i < 5; i ++)
+    {
+        if (guessedLetters[i] == guess)
+        {
+            tried = true;
+        }
+    }
+    return tried;
 }

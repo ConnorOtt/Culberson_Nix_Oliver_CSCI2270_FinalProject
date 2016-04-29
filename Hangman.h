@@ -31,6 +31,7 @@ class Hangman
         void gameplay(letter* word);
         letter* buildList(string word);
         void addPreviousTry(char letter);
+        bool isTried(char guess);
     protected:
     private:
         string wordArray[4213];
